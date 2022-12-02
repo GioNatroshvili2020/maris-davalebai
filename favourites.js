@@ -16,7 +16,7 @@ async function fetch_favourite_movies(){
     }
     const cards = document.querySelectorAll('.card');
 
-    add_click_effect_to_cards(cards);
+    // add_click_effect_to_cards(cards);
 }
 
 function get_LS(){
