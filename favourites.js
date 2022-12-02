@@ -4,33 +4,33 @@ const image_path = `https://image.tmdb.org/t/p/w1280`;
 const main_grid_title = document.querySelector('.favorites h1');
 const main_grid = document.querySelector('.favorites .movies-grid');
 
-async function fetch_favourite_movies(){
+async function fetchFavourites(){
     main_grid.innerHTML='';
-    const movies_LS=await get_LS();
+    const movies_LS=await getLs();
     const movies=[];
     for(let i=0; i<movies_LS.length; i++){
         const movie_id=movies_LS[i];
-        let movie=await get_movie_by_id(movie_id);
-        add_favorites_to_dom_from_LS(movie);
+        let movie=await getMovieById(movie_id);
+        addFavouritesToDomFromLs(movie);
         movies.push(movie); 
     }
     const cards = document.querySelectorAll('.card');
 
-    // add_click_effect_to_cards(cards);
+    // addClickEffects(cards);
 }
 
-function get_LS(){
+function getLs(){
     const movie_ids = JSON.parse(localStorage.getItem('movie-id'))
     return movie_ids === null ? [] : movie_ids
 }
 
-async function get_movie_by_id (id) {
+async function getMovieById (id) {
     const resp = await fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}`)
     const respData = await resp.json()
     return respData
 }
 
-function add_favorites_to_dom_from_LS(movie){
+function addFavouritesToDomFromLs(movie){
     main_grid.innerHTML += `
     <div class="card" data-id="${movie.id}">
         <div class="img">
@@ -52,10 +52,10 @@ function add_favorites_to_dom_from_LS(movie){
 
 }
 
-function add_click_effect_to_cards(cards){
+function addClickEffects(cards){
     cards.forEach(card => {
         card.addEventListener('click', () => show_popup(card))
     })
 }
 
-fetch_favourite_movies();
+fetchFavourites();

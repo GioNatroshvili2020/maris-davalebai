@@ -11,7 +11,7 @@ const trending_el = document.querySelector('.trending .movies-grid');
 const popup_container = document.querySelector('.popup-container')
 
 
-function add_click_effect_to_cards(cards){
+function addClickEffects(cards){
     cards.forEach(card => {
         card.addEventListener('click', () => show_popup(card))
     })
@@ -20,16 +20,16 @@ function add_click_effect_to_cards(cards){
 
 
 
-btn.addEventListener('click', add_searched_movies_to_dom);
+btn.addEventListener('click', addSearchResults);
 
 
-async function get_movie_by_search (search_term) {
+async function getSearchResults (search_term) {
     const resp = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${search_term}`)
     const respData = await resp.json();
     return respData.results
 }
-async function add_searched_movies_to_dom () {
-    const data = await get_movie_by_search(input.value)
+async function addSearchResults () {
+    const data = await getSearchResults(input.value)
 
     main_grid_title.innerText = `Search Results...`
     main_grid.innerHTML = data.map(e => {
@@ -55,19 +55,19 @@ async function add_searched_movies_to_dom () {
 
     const cards = document.querySelectorAll('.card')
     debugger
-    add_click_effect_to_cards(cards)
+    addClickEffects(cards)
 }
 
 
 
 
-async function get_movie_by_id (id) {
+async function getMovieById (id) {
     const resp = await fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}`)
     const respData = await resp.json()
     return respData
 }
 
-async function get_movie_trailer (id) {
+async function getTrailer (id) {
     const resp = await fetch(`https://api.themoviedb.org/3/movie/${id}/videos?api_key=${API_KEY}`)
     const respData = await resp.json()
     return respData.results[0].key
@@ -77,8 +77,8 @@ async function show_popup (card) {
 
     
     const movie_id = card.getAttribute('data-id');
-    const movie = await get_movie_by_id(movie_id);
-    const movie_trailer = await get_movie_trailer(movie_id);
+    const movie = await getMovieById(movie_id);
+    const movie_trailer = await getTrailer(movie_id);
     popup_container.style.background = `linear-gradient(rgba(0, 0, 0, .8), rgba(0, 0, 0, 1)), url(${image_path + movie.poster_path})`
 
     popup_container.innerHTML = `
@@ -139,49 +139,48 @@ async function show_popup (card) {
     x_icon.addEventListener('click', () => popup_container.classList.remove('show-popup'))
 
     const heart_icon = popup_container.querySelector('.heart-icon');
-    const movie_ids = get_LS();
+    const movie_ids = getFromLs();
     for(let i = 0; i <= movie_ids.length; i++) {
         if (movie_ids[i] == movie_id) heart_icon.classList.add('change-color')
     }
 
     heart_icon.addEventListener('click', () => {
         if(heart_icon.classList.contains('change-color')) {
-            remove_LS(movie_id);
+            removeLs(movie_id);
             heart_icon.classList.remove('change-color');
         }
         else{
-            add_to_LS(movie_id);
+            addToLs(movie_id);
             heart_icon.classList.add('change-color');
         }
-        fetch_favourite_movies();
 
     });
 };
 
-function get_LS(){
+function getFromLs(){
     const movie_ids = JSON.parse(localStorage.getItem('movie-id'))
     return movie_ids === null ? [] : movie_ids
 }
 
-function add_to_LS (id) {
-    const movie_ids = get_LS()
+function addToLs (id) {
+    const movie_ids = getFromLs()
     localStorage.setItem('movie-id', JSON.stringify([...movie_ids, id]))
 }
-function remove_LS (id) {
-    const movie_ids = get_LS()
+function removeLs (id) {
+    const movie_ids = getFromLs()
     localStorage.setItem('movie-id', JSON.stringify(movie_ids.filter(e => e !== id)))
 }
 
-get_trending_movies()
-async function get_trending_movies () {
+getTrendings()
+async function getTrendings () {
     const resp = await fetch(`https://api.themoviedb.org/3/trending/all/day?api_key=${API_KEY}`)
     const respData = await resp.json()
     return respData.results
 }
 
-async function add_to_dom_trending () {
+async function addTrendings () {
 
-    const data = await get_trending_movies()
+    const data = await getTrendings()
     console.log(data);
 
     trending_el.innerHTML = data.slice().map(e => {
@@ -206,11 +205,11 @@ async function add_to_dom_trending () {
     }).join('')
 
     const cards = document.querySelectorAll('.card')
-    add_click_effect_to_cards(cards)
+    addClickEffects(cards)
 
 }
 
 
 
-add_to_dom_trending()
+addTrendings()
 
