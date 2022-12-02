@@ -1,8 +1,7 @@
 const API_KEY = `98325a9d3ed3ec225e41ccc4d360c817`;
 const image_path = `https://image.tmdb.org/t/p/w1280`;
 
-const main_grid_title = document.querySelector('.favorites h1');
-const main_grid = document.querySelector('.favorites .movies-grid');
+const main_grid = document.querySelector('.movies-grid');
 
 async function fetchFavourites(){
     main_grid.innerHTML='';

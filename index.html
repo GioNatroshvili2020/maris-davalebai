@@ -8,23 +8,27 @@
     <title>Movie App</title>
 </head>
 <body>
-    <header>
-        <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="favourites.html">favourites</a></li>
-        </ul>
-    </header>
-    <div class="search">
-        <input type="text" placeholder="Search Movie">
-        <button>Search</button>
+    <div class="sidebar">
+        <a href="index.html">Home</a>
+        <a href="favourites.html">favourites</a>
     </div>
-    <div class="movies-container trending">
+    <header>
+        <img class="menu-icon" src="burger-bar.png" alt="Burger Icon">
+        <div class="search">
+            <input type="text" placeholder="Search Movie">
+            <button>Search</button>
+        </div>
+        <p>Login / SignUp</p>
+    </header>
+    <div class="clearfix"></div>
+    <div class="wrapper">
         <h1>Trending</h1>
         <div class="movies-grid">           
         </div>
+    </div>
     <div class="popup-container">
     </div>   
-    <footer class="footer">
+    <!-- <footer class="footer">
         <div class="box">
             <div class="row">
                 <div class="footer-col">
@@ -49,7 +53,7 @@
                 
             </div>
         </div>
-    </footer>
+    </footer> -->
 </body>
 <script src="script.js" defer></script>
 
