@@ -215,7 +215,7 @@ async function get_trending_movies () {
     const respData = await resp.json()
     return respData.results
 }
-add_to_dom_trending()
+
 async function add_to_dom_trending () {
 
     const data = await get_trending_movies()
@@ -241,8 +241,12 @@ async function add_to_dom_trending () {
             </div>
         `
     }).join('')
+    fetch_favourite_movies();
+
 
 }
 
- fetch_favourite_movies();
+
+
+add_to_dom_trending()
 
