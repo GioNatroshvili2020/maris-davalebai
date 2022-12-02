@@ -2,6 +2,12 @@ const API_KEY = `98325a9d3ed3ec225e41ccc4d360c817`;
 const image_path = `https://image.tmdb.org/t/p/w1280`;
 const popup_container = document.querySelector('.popup-container')
 
+const xIcon = document.querySelector('.x-icon');
+xIcon.addEventListener('click', returnToHomePage)
+
+function returnToHomePage() {
+    window.location.replace("index.html");
+}
 
 function getChosenId(){
     const movieId = JSON.parse(localStorage.getItem('chosenMovieId'))
