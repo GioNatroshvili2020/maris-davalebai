@@ -15,7 +15,7 @@ async function fetchFavourites(){
     }
     const cards = document.querySelectorAll('.card');
 
-    // addClickEffects(cards);
+     addClickEffects(cards);
 }
 
 function getLs(){
@@ -26,7 +26,7 @@ function getLs(){
 async function getMovieById (id) {
     const resp = await fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}`)
     const respData = await resp.json()
-    return respData
+    return respData;
 }
 
 function addFavouritesToDomFromLs(movie){
@@ -53,8 +53,19 @@ function addFavouritesToDomFromLs(movie){
 
 function addClickEffects(cards){
     cards.forEach(card => {
-        card.addEventListener('click', () => show_popup(card))
+        card.addEventListener('click', () => openDetails(card))
     })
 }
 
+function openDetails(card){
+    debugger
+    const id = card.getAttribute('data-id');
+    savePicked(id);
+    window.location.replace("details.html");
+}
+function savePicked (id) {
+    localStorage.setItem('chosenMovieId', JSON.stringify(id));
+}
 fetchFavourites();
+
+
