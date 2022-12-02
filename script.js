@@ -21,6 +21,8 @@ function add_click_effect_to_cards(cards){
 
 
 btn.addEventListener('click', add_searched_movies_to_dom);
+
+
 async function get_movie_by_search (search_term) {
     const resp = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${search_term}`)
     const respData = await resp.json();
@@ -182,7 +184,6 @@ async function fetch_favourite_movies(){
         movies.push(movie); 
     }
     const cards = document.querySelectorAll('.card');
-
     add_click_effect_to_cards(cards);
 }
 
@@ -241,7 +242,7 @@ async function add_to_dom_trending () {
         `
     }).join('')
 
-    const cards = document.querySelectorAll('.card')
 }
 
-fetch_favourite_movies();
+ fetch_favourite_movies();
+
