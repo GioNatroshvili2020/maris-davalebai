@@ -58,7 +58,6 @@ function addClickEffects(cards){
 }
 
 function openDetails(card){
-    debugger
     const id = card.getAttribute('data-id');
     savePicked(id);
     window.location.replace("details.html");

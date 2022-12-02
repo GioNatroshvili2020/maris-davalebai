@@ -20,7 +20,6 @@ async function getTrailer (id) {
 }
 
 async function showDetails () {
-debugger
     popup_container.classList.add('show-popup');
     
     const movie_id = getChosenId();
