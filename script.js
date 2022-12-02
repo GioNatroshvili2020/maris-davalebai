@@ -1,11 +1,10 @@
 const API_KEY = `98325a9d3ed3ec225e41ccc4d360c817`;
 const image_path = `https://image.tmdb.org/t/p/w1280`;
 
-const input = document.querySelector('.search input');
-const btn = document.querySelector('.search button')
-const main_grid_title = document.querySelector('.favorites h1');
-
-const trending_el = document.querySelector('.movies-grid');
+const searchInput = document.querySelector('.search input');
+const searchButton = document.querySelector('.search button')
+const title = document.querySelector('.wrapper h1');
+const moviesGrid = document.querySelector('.movies-grid');
 
 const popup_container = document.querySelector('.popup-container')
 
@@ -19,19 +18,23 @@ function addClickEffects(cards){
 
 
 
-btn.addEventListener('click', addSearchResults);
+searchButton.addEventListener('click', addSearchResults);
 
 
-async function getSearchResults (search_term) {
-    const resp = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${search_term}`)
+async function getSearchResults (key) {
+    const resp = await fetch(`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${key}`)
     const respData = await resp.json();
-    return respData.results
+    return {data: respData.results, searchKey: key}
 }
 async function addSearchResults () {
-    const data = await getSearchResults(input.value)
+    if(!searchInput.value) {
+        addTrendings();
+        return;
+    }
+    const {data, searchKey} = await getSearchResults(searchInput.value)
 
-    main_grid_title.innerText = `Search Results...`
-    main_grid.innerHTML = data.map(e => {
+    title.innerText = `Results for '${searchKey}':`;
+    moviesGrid.innerHTML = data.map(e => {
         return `
             <div class="card" data-id="${e.id}">
                 <div class="img">
@@ -53,7 +56,6 @@ async function addSearchResults () {
     }).join('')
 
     const cards = document.querySelectorAll('.card')
-    debugger
     addClickEffects(cards)
 }
 
@@ -180,9 +182,9 @@ async function getTrendings () {
 async function addTrendings () {
 
     const data = await getTrendings()
-    console.log(data);
+    title.innerText = `Trending`;
 
-    trending_el.innerHTML = data.slice().map(e => {
+    moviesGrid.innerHTML = data.slice().map(e => {
         return `
             <div class="card" data-id="${e.id}">
                 <div class="img">
