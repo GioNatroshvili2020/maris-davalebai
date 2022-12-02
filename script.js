@@ -11,7 +11,7 @@ const trending_el = document.querySelector('.trending .movies-grid');
 const popup_container = document.querySelector('.popup-container')
 
 
-function add_click_effect_to_card(cards){
+function add_click_effect_to_cards(cards){
     cards.forEach(card => {
         card.addEventListener('click', () => show_popup(card))
     })
@@ -53,7 +53,7 @@ async function add_searched_movies_to_dom () {
 
     const cards = document.querySelectorAll('.card')
     debugger
-    add_click_effect_to_card(cards)
+    add_click_effect_to_cards(cards)
 }
 
 
@@ -181,6 +181,9 @@ async function fetch_favourite_movies(){
         add_favorites_to_dom_from_LS(movie);
         movies.push(movie); 
     }
+    const cards = document.querySelectorAll('.card');
+
+    add_click_effect_to_cards(cards);
 }
 
 function add_favorites_to_dom_from_LS(movie){
@@ -202,8 +205,6 @@ function add_favorites_to_dom_from_LS(movie){
         </div>
     </div>
 `;
-const cards = document.querySelectorAll('.card');
-add_click_effect_to_card(cards);
 
 }
 
